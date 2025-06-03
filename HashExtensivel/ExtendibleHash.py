@@ -111,7 +111,7 @@ class ExtendibleHash:
 
             if (status):
                 str = str + "\t" + repr(bk) + "\n";
-				rdup.append(bk); 					# Adicionar bucket na lista
+                rdup.append(bk); 					# Adicionar bucket na lista
         
         str += "]\n";
         return (str);
