@@ -2,9 +2,26 @@ import tkinter as tk
 from tkinter import ttk
 
 
-def check_input():
+def insert_key():
     var = var_entry.get()
-    print(var)
+    var_entry.delete(0, 10000)
+    try:
+        var = int(var)
+    except:
+        print("ERRO: Input não é um número")
+    else:
+        print(f"inserting key: {var}")
+
+
+def remove_key():
+    var = var_entry.get()
+    var_entry.delete(0, 10000)
+    try:
+        var = int(var)
+    except:
+        print("ERRO: Input não é um número")
+    else:
+        print(f"removing key: {var}")
 
 
 # Define screens
@@ -15,17 +32,26 @@ root.geometry("100x300+500+100")
 
 # Define buttons
 close = tk.Button(root, text="Quit", command=root.destroy)
-close.pack()
 
 var_entry = ttk.Entry(root)
-var_entry.pack()
 
-tk.Button(
+ins_button = tk.Button(
     root,
-    text="print",
-    command=check_input,
-    width=18,
-).pack(pady=10, padx=30, fill="x")
+    text="Inserir",
+    command=insert_key,
+)
+
+rm_button = tk.Button(
+    root,
+    text="Remover",
+    command=remove_key,
+)
+
+# Pack buttons
+var_entry.pack()
+ins_button.pack()
+rm_button.pack()
+close.pack(side=tk.BOTTOM)
 
 # Initialize main screen
 root.mainloop()
