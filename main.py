@@ -1,21 +1,31 @@
-from PyQt6.QtWidgets import QMainWindow, QApplication, QPushButton
-
-import sys
-
-
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-
-        self.setWindowTitle("Hello World")
-
-        button = QPushButton("My simple app.")
-        button.pressed.connect(self.close)
-
-        self.setCentralWidget(button)
-        self.show()
+import tkinter as tk
+from tkinter import ttk
 
 
-app = QApplication(sys.argv)
-w = MainWindow()
-app.exec()
+def check_input():
+    var = var_entry.get()
+    print(var)
+
+
+# Define screens
+## Root
+root = tk.Tk()
+root.title("Visualizador Hash Extensivel")
+root.geometry("100x300+500+100")
+
+# Define buttons
+close = tk.Button(root, text="Quit", command=root.destroy)
+close.pack()
+
+var_entry = ttk.Entry(root)
+var_entry.pack()
+
+tk.Button(
+    root,
+    text="print",
+    command=check_input,
+    width=18,
+).pack(pady=10, padx=30, fill="x")
+
+# Initialize main screen
+root.mainloop()
