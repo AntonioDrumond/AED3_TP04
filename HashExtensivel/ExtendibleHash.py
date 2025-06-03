@@ -27,54 +27,55 @@ class ExtendibleHash:
         # Duplicar diretorio
     def dupDir (self):
         for i in range(self.pow_size):
-            self.dir.append(self.dir[i]);
+            self.dir.append(self.dir[i]); # Copiar referencias
         
+		# Aumentar tamanho do diretorio
         self.dir_size += 1;
         self.pow_size = (pow(2, self.dir_size));
-    
-        print ("Dir increased!");
 
         # Inserir novo registro
     def insert (self, ID, data):
 
-        hash = self.hash(ID);
-        bk = self.dir[hash];
+        hash = self.hash(ID);	# Hash do registro
+        bk = self.dir[hash];	# Bucket a ser inserido
 
-        if (bk.isFull() == True):
-            self.dupBucket(bk, hash);
-            bk = self.dir[self.hash(ID)];
+        if (bk.isFull() == True):		
+            self.dupBucket(bk, hash);		# Duplicar bucket
+            bk = self.dir[self.hash(ID)];	# Recalcular bucket a ser inserido
         
-        bk.insert(ID, data);
+        bk.insert(ID, data);	# Inserir registro
         
         # Duplicar bucket
     def dupBucket (self, bk, pos):
 
-        print("Bucket duplicated!");
+        new_depth = bk.local_depth + 1; # Calcular nova profundidade
 
-        new_depth = bk.local_depth + 1;
+        if (new_depth > self.dir_size):	# Se a pronfundidade local for maior do que a do diretorio
+            self.dupDir();				# Duplicar diretorio
 
-        if (new_depth > self.dir_size):
-            self.dupDir();
-
-        aux1 = Bucket(new_depth);
-        aux2 = Bucket(new_depth);
+		# Criar buckets temporarios
+        aux1 = Bucket(new_depth);	# Bucket original
+        aux2 = Bucket(new_depth);	# Bucket novo
     
         for i in range(bk.i):
             
-            id = bk.regs[i].ID;
+            id = bk.regs[i].ID;	# Copiar id
 
-            if (id != -1):
+            if (id != -1):		# Verificar se o registro e valido
                 
-                data = bk.regs[i].data;
-                hash = self.hash(id);
+                data = bk.regs[i].data; 	# Copia os dados do registro
+                hash = self.hash(id);		# Calcula a nova hash do registro
 
+				# Reinserir registro
                 if (hash == pos):
-                    aux1.insert(id, data);
+                    aux1.insert(id, data);	# Original
                 else:
-                    aux2.insert(id, data);
+                    aux2.insert(id, data);	# Novo
     
-        buf = int (pos + (self.pow_size/2));
-        self.dir[pos] = aux1;
+        buf = int (pos + (self.pow_size/2)); 	 # Calcula a posicao do novo bucket
+
+		# Alterar buckets do diretorio
+        self.dir[pos] = aux1;	
         self.dir[buf] = aux2;
 
         # Encontrar registro
@@ -84,12 +85,11 @@ class ExtendibleHash:
 
         hash = self.hash(ID);
 
-        if (hash <= self.dir_size):
+        if (hash < self.pow_size):
             bk = self.dir[hash];
-            res = bk.find(ID);
+            res = bk.find(ID); 		# Procura registro no bucket
         
         if (res == None):
-            print ("Nome nao encontrado!");
             res = "''";
 
         return (res);
@@ -97,18 +97,21 @@ class ExtendibleHash:
         # "To string"
     def __str__(self):
         str = f"dir_size = {self.dir_size}\ndir = [\n";
-        rdup = [];
 
+        rdup = []; 		# Lista de buckets ja encontrados 
+
+		# Retornar todos os buckets no diretorio
         for bk in self.dir:
+
             status = True;
 
+			# Ignorar referencias duplas
             for used in rdup:
-                status = status and (bk != used);
+                status = status and (bk != used); 	# Se nao for uma duplicata
 
             if (status):
                 str = str + "\t" + repr(bk) + "\n";
-
-            rdup.append(bk);
+				rdup.append(bk); 					# Adicionar bucket na lista
         
         str += "]\n";
         return (str);

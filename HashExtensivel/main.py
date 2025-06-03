@@ -6,6 +6,7 @@ if __name__ == "__main__":
 	hash = EH.ExtendibleHash();
 	print(hash);
 	hash.insert(1, "Davi");
+	print(f"find={hash.find(2)}");
 	print(hash);
 	hash.insert(2, "Ferreira");
 	print(hash);
@@ -13,5 +14,4 @@ if __name__ == "__main__":
 	print(hash);
 	hash.insert(4, "Nao sei");
 	print(hash);
-	print(f"find={hash.find(1)}");
 	print(f"find={hash.find(20)}");
