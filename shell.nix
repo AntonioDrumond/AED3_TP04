@@ -4,9 +4,7 @@
 pkgs.mkShell {
   buildInputs = with pkgs; [
     python312
-    python312Packages.pyqt6
-    python312Packages.anyqt
-    python312Packages.pyqtdarktheme
+    python312Packages.tkinter
     python312Packages.pandas
     python312Packages.numpy
   ];
