@@ -4,9 +4,8 @@ import ExtendibleHash as EH;
 
 if __name__ == "__main__":
 	hash = EH.ExtendibleHash();
-	print(hash);
+	print(f"Insert: \n\n{hash}");
 	hash.insert(1, "Davi");
-	print(f"find={hash.find(2)}");
 	print(hash);
 	hash.insert(2, "Ferreira");
 	print(hash);
@@ -22,11 +21,18 @@ if __name__ == "__main__":
 	print(hash);
 	hash.insert(8, "Aura");
 	print(hash);
+
+	print("\n\nDelete: \n\ndelete(8)\n");
 	hash.delete(8);
 	print(hash);
+	print("delete(8)\n");
 	hash.delete(8);
 	print(hash);
+
+	print ("\n\nUpdate: \n\nupdate(5, hahaha)\n");
 	hash.update(5, "hahaha");
 	print(hash)
 
-	print(f"find={hash.find(20)}");
+	print ("Find: \n\n");
+	print(f"find(1)={hash.find(1)}");
+	print(f"find(20)={hash.find(20)}");
