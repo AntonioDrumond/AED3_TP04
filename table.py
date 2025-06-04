@@ -10,7 +10,7 @@ class Table:
         # self.rows = len(data)
         self.rows = 1
         # self.cols = len(data[0]) if self.rows else 0
-        self.cols = 6
+        self.cols = len(headers) if (headers) else 6
         self.cells = []  # matriz de Entry
         self.headers = headers
         
@@ -58,6 +58,30 @@ class Table:
                 linha_widgets.append(e)
             self.cells.append(linha_widgets)
     
+    def update_data(self, new_data):
+        """
+        Completely replaces table data with new list of lists
+        Args:
+            new_data: List of lists with the new row data
+        """
+        # Validate input is list of lists
+        if not all(isinstance(row, list) for row in new_data):
+            raise TypeError("Input must be a list of lists")
+            
+        self.data = [row.copy() for row in new_data]  # Create copy to avoid reference issues
+        self.rows = len(self.data)
+        
+        # Update column count if we have data
+        if self.rows > 0:
+            self.cols = len(self.data[0])
+            # Validate all rows have same number of columns
+            if not all(len(row) == self.cols for row in self.data):
+                raise ValueError("All rows must have the same number of columns")
+        elif self.headers:
+            self.cols = len(self.headers)
+            
+        self.create_table()  # Rebuild the table
+
     def add_row(self, row_data=None):
         """Add a new row to the table"""
         if row_data is None:

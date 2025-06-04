@@ -39,11 +39,15 @@ class ExtendibleHash:
         hash = self.hash(ID);	# Hash do registro
         bk = self.dir[hash];	# Bucket a ser inserido
 
-        if (bk.isFull() == True):		
+        status = bk.isFull();
+
+        if (status == True):		
             self.dupBucket(bk, hash);		# Duplicar bucket
             bk = self.dir[self.hash(ID)];	# Recalcular bucket a ser inserido
         
-        bk.insert(ID);	# Inserir registro
+        bki = bk.insert(ID);	# Inserir registro
+    
+        return ((hash, bki,));
         
         # Duplicar bucket
     def dupBucket (self, bk, pos):

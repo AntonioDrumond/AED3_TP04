@@ -26,6 +26,7 @@ def main():
     # ---------------- tabela ----------------
     headers = ["Endereço", "P'", "N", "Chave 1", "Chave 2", "Chave 3"]
     tabela = Table(buckets, headers=headers)
+    tabela.add_row();
 
     # ---------------- controles ----------------
     frm_controls = ttk.LabelFrame(root, text="Inserir valor")
@@ -61,8 +62,39 @@ def main():
         except:
             messagebox.showerror("Erro", f"Entrada inválida:")
         else:
-            # aqui descobrir as coordenadas
-            mandar_pra_tabela(1,1, valor)
+            he.insert(valor);
+            tab = formatar_tabela();
+            tabela.update_data(tab);
+    
+    def formatar_tabela():
+
+        pos = he.getRefs();
+
+        res = []*len(pos);
+
+        i = 0;
+        for pi in pos:
+
+            lis = [];
+
+            if (type(pi) == tuple):
+                pi = pi[0];
+
+            bk = he.dir[pi];
+            n = bk.i;
+            p = bk.local_depth;
+
+            lis.append(i);
+            lis.append(p);
+            lis.append(n);
+
+            for reg in bk.regs:
+                lis.append((reg));
+        
+            i += 1;
+            res.append(lis);
+
+        return (res);
 
     ttk.Button(frm_controls, text="Inserir", command=inserir_valor)\
             .grid(row=2, column=0, columnspan=4, pady=(6, 4), sticky="we")

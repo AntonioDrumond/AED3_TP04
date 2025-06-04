@@ -25,11 +25,16 @@ class Bucket:
         # Inserir novo registro no bucket
     def insert (self, ID : int):
 
+        res = -1;
+
         if (self.i >= self.n):
             print ("ERRO: O bucket esta cheio!");
         else:
             self.regs[self.i] = Register(ID);
+            res = self.i;
             self.i += 1;
+    
+        return (res);
     
         # Encontra um registro usando ID
     def find (self, ID):
