@@ -16,11 +16,17 @@ if __name__ == "__main__":
 	print(hash);
 	hash.insert(5, "Nada");
 	print(hash);
-	hash.insert(6, "Tilo");
+	hash.insert(6, "Tonin");
 	print(hash);
-	hash.insert(7, "Kiki");
+	hash.insert(7, "Quel");
 	print(hash);
-	hash.insert(8, "Mora");
+	hash.insert(8, "Aura");
 	print(hash);
+	hash.delete(8);
+	print(hash);
+	hash.delete(8);
+	print(hash);
+	hash.update(5, "hahaha");
+	print(hash)
 
 	print(f"find={hash.find(20)}");

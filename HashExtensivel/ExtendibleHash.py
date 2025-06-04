@@ -81,17 +81,42 @@ class ExtendibleHash:
         # Encontrar registro
     def find (self, ID):
 
-        res : Register = None;
+        res = None;
 
         hash = self.hash(ID);
 
         if (hash < self.pow_size):
             bk = self.dir[hash];
             res = bk.find(ID); 		# Procura registro no bucket
-        
-        if (res == None):
-            res = "''";
 
+        return (res);
+
+        # Apaga o registro
+    def delete (self, ID):
+
+        res = False;
+    
+        reg = self.find(ID);
+
+        if (reg != None):
+            reg.ID = -1;
+            reg.data = "";
+            res = True;
+    
+        return (res);
+
+        # Atualizar registro
+    def update (self, ID, data):
+        
+        res = False;
+    
+        hash = self.hash(ID);
+
+        reg = self.find(ID);
+        if (reg != None):
+            reg.data = data;
+            res = True;
+    
         return (res);
 
         # Encontra as referencias dos buckets guardando as duplicatas em tuplas
@@ -107,13 +132,14 @@ class ExtendibleHash:
             other = -1;
 
             j = 0;
-            while (j < len(rdup) and status == True):
+            n = len(rdup);
+            while (j < n and status == True):
                 status = status and (bk != rdup[j]);    # Se o bucket nao estiver na lista
                 other = j;                              # Guarda a posicao da primeira referencia no diretorio
                 j += 1;
     
             if (status == True):    # Se nao estiver na lista
-                res.append((i));    # Adiciona posicao
+                res.append(i);    # Adiciona posicao
                 rdup.append(bk);    # Adiciona bucket na lista
             
             else:                           # Se estiver na lista
@@ -130,12 +156,13 @@ class ExtendibleHash:
 
         refs = self.getRefs();      # Econtra referencias
 
-        for i in range(len(refs)):
+        n = len(refs);
+        for i in range(n):
             pos = refs[i];
             res = f"{res}\t{pos}\t->\t";    # Referencias dos buckets
 
             if (type(pos) == tuple):
-                pos = min(pos);
+                pos = pos[0];
 
             res = f"{res}{ repr( self.dir[pos] ) }\n";  # Bucket correspondente
         
