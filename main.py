@@ -8,7 +8,7 @@ def destroy_all():
     directory.destroy()
 
 
-def insert_key_test():
+def insert_key():
     trem = tk.Label(
         buckets,
         text=f"cont: {var_entry.get()}",
@@ -17,7 +17,7 @@ def insert_key_test():
     var_entry.delete(0, 10000)
 
 
-def insert_key():
+def insert_key_te():
     var = var_entry.get()
     var_entry.delete(0, 10000)
     try:
@@ -89,3 +89,4 @@ close.pack(side=tk.BOTTOM, fill=tk.X, padx=5, pady=5)
 # Initialize main screen
 root.mainloop()
 buckets.mainloop()
+directory.mainloop()
