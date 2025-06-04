@@ -149,6 +149,24 @@ class ExtendibleHash:
     
         return (res);
 
+    # Referencias do diretorio formatadas
+    def formatedRefs (self):
+
+        ref = self.getRefs();
+        res = [0]*self.pow_size
+
+        i = 0;
+        for r in ref:
+            if (type(r) == tuple):
+                for y in r:
+                    res[y] = i;
+            else:
+                res[r] = i;
+
+            i += 1;
+    
+        return (res);
+
         # "To string"
     def __str__(self):
 

@@ -36,3 +36,5 @@ if __name__ == "__main__":
 	print ("Find: \n\n");
 	print(f"find(1)={hash.find(1)}");
 	print(f"find(20)={hash.find(20)}");
+
+	print(f"\n\n\n{hash.formatedRefs()}");
