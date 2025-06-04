@@ -34,7 +34,7 @@ class ExtendibleHash:
         self.pow_size = (pow(2, self.dir_size));
 
         # Inserir novo registro
-    def insert (self, ID, data):
+    def insert (self, ID):
 
         hash = self.hash(ID);	# Hash do registro
         bk = self.dir[hash];	# Bucket a ser inserido
@@ -43,7 +43,7 @@ class ExtendibleHash:
             self.dupBucket(bk, hash);		# Duplicar bucket
             bk = self.dir[self.hash(ID)];	# Recalcular bucket a ser inserido
         
-        bk.insert(ID, data);	# Inserir registro
+        bk.insert(ID);	# Inserir registro
         
         # Duplicar bucket
     def dupBucket (self, bk, pos):
@@ -63,14 +63,13 @@ class ExtendibleHash:
 
             if (id != -1):		# Verificar se o registro e valido
                 
-                data = bk.regs[i].data; 	# Copia os dados do registro
                 hash = self.hash(id);		# Calcula a nova hash do registro
 
 				# Reinserir registro
                 if (hash == pos):
-                    aux1.insert(id, data);	# Original
+                    aux1.insert(id);	# Original
                 else:
-                    aux2.insert(id, data);	# Novo
+                    aux2.insert(id);	# Novo
     
         buf = int (pos + (self.pow_size/2)); 	 # Calcula a posicao do novo bucket
 
@@ -100,21 +99,6 @@ class ExtendibleHash:
 
         if (reg != None):
             reg.ID = -1;
-            reg.data = "";
-            res = True;
-    
-        return (res);
-
-        # Atualizar registro
-    def update (self, ID, data):
-        
-        res = False;
-    
-        hash = self.hash(ID);
-
-        reg = self.find(ID);
-        if (reg != None):
-            reg.data = data;
             res = True;
     
         return (res);
