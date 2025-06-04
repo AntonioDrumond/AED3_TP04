@@ -94,24 +94,51 @@ class ExtendibleHash:
 
         return (res);
 
-        # "To string"
-    def __str__(self):
-        str = f"dir_size = {self.dir_size}\ndir = [\n";
+        # Encontra as referencias dos buckets guardando as duplicatas em tuplas
+    def getRefs (self):
 
-        rdup = []; 		# Lista de buckets ja encontrados 
-
-		# Retornar todos os buckets no diretorio
+        rdup = []; 		# Lista de buckets ja encontrados
+        res = [];       # Lista de posicoes
+        i = 0;          # index
+        
         for bk in self.dir:
 
             status = True;
+            other = -1;
 
-			# Ignorar referencias duplas
-            for used in rdup:
-                status = status and (bk != used); 	# Se nao for uma duplicata
+            j = 0;
+            while (j < len(rdup) and status == True):
+                status = status and (bk != rdup[j]);    # Se o bucket nao estiver na lista
+                other = j;                              # Guarda a posicao da primeira referencia no diretorio
+                j += 1;
+    
+            if (status == True):    # Se nao estiver na lista
+                res.append((i));    # Adiciona posicao
+                rdup.append(bk);    # Adiciona bucket na lista
+            
+            else:                           # Se estiver na lista
+                res[other] = (other, i);    # Cria uma tupla para as duas posicoes
+            
+            i += 1;
+    
+        return (res);
 
-            if (status):
-                str = str + "\t" + repr(bk) + "\n";
-                rdup.append(bk); 					# Adicionar bucket na lista
+        # "To string"
+    def __str__(self):
+
+        res = f"dir_size = {self.dir_size}\ndir = [\n";
+
+        refs = self.getRefs();      # Econtra referencias
+
+        for i in range(len(refs)):
+            pos = refs[i];
+            res = f"{res}\t{pos}\t->\t";    # Referencias dos buckets
+
+            if (type(pos) == tuple):
+                pos = min(pos);
+
+            res = f"{res}{ repr( self.dir[pos] ) }\n";  # Bucket correspondente
         
-        str += "]\n";
-        return (str);
+        res += "]\n";
+
+        return (res);

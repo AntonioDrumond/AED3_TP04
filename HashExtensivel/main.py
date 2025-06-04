@@ -14,4 +14,13 @@ if __name__ == "__main__":
 	print(hash);
 	hash.insert(4, "Nao sei");
 	print(hash);
+	hash.insert(5, "Nada");
+	print(hash);
+	hash.insert(6, "Tilo");
+	print(hash);
+	hash.insert(7, "Kiki");
+	print(hash);
+	hash.insert(8, "Mora");
+	print(hash);
+
 	print(f"find={hash.find(20)}");
