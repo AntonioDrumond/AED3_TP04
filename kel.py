@@ -3,7 +3,7 @@ from tkinter import ttk, messagebox
 import ExtendibleHash as EH
 from table import Table
 
-##################################### FUNÇÕES #####################################
+##################################### TAMANHO E POSIÇÃO DAS JANELAS #####################################
 
 def center_windows(root, dir, buckets):
     """Center all windows on screen with equal spacing"""
@@ -172,15 +172,16 @@ def main():
         return [[h, b] for h, b in zip(hashs, bucket_numbers)]
 
     ttk.Button(frm_controls, text="Inserir", command=inserir_valor)\
-            .grid(row=2, column=0, columnspan=4, pady=(6, 4), sticky="we")
-
-    def add_new_row():
-        tabela.add_row()
-        spin_row.config(to=tabela.rows)       
+            .grid(row=2, column=0, columnspan=4, pady=(6, 4), sticky="we")    
 
     # ---------------- BUSCA ----------------
     
     def buscar_valor():
+        #mostrar a hash do valor
+        #dar um hilight na linha do diretorio
+        #dar um hilight na linha do bucket
+        #mostrar caixa de aviso se achar, mostrando numero do bucket e posicao da chave
+        #mostrar caixa de aviso se não achar, mostrando que não foi encontrado
         x = 2
     
     frm_controls = ttk.LabelFrame(root, text="Buscar valor")
@@ -193,6 +194,7 @@ def main():
     ttk.Button(frm_controls, text="Buscar", command=buscar_valor)\
             .grid(row=2, column=0, columnspan=4, pady=(6, 4), sticky="we")
     
+    # ---------------- OUTROS ----------------
     
     ttk.Button(root, text="Sair", command=root.destroy)\
             .pack(fill="x", padx=8, pady=(0, 8))
@@ -201,32 +203,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# ANOTAÇOESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSss
-
-#You can also add pre-filled rows by passing data to add_row(), like:
-#tabela.add_row([6, "New Name", "New City", 25])
-
-#ttk.Label(frm_controls, text="Linha:").grid(row=0, column=0, padx=2, pady=4, sticky="e")
-#spin_row = tk.Spinbox(frm_controls, from_=1, to=tabela.rows, width=5, justify="center")
-#spin_row.grid(row=0, column=1, padx=2, pady=4)
-
-#ttk.Label(frm_controls, text="Coluna:").grid(row=0, column=2, padx=2, pady=4, sticky="e")
-#spin_col = tk.Spinbox(frm_controls, from_=1, to=tabela.cols, width=5, justify="center")
-#spin_col.grid(row=0, column=3, padx=2, pady=4)
-
-#ttk.Button(root, text="Adicionar Linha", command=add_new_row)\
-        #.pack(fill="x", padx=8, pady=4)
-        
-#def mandar_pra_tabela(x, y, valor):
-    #try:
-        #linha   = int(x)
-        #coluna  = int(y)
-        #if valor == "":
-            #raise ValueError("Valor vazio")
-        #tabela.set_value(linha, coluna, valor)
-        #entry_val.delete(0, tk.END)
-    #except (ValueError, IndexError) as err:
-        #messagebox.showerror("Erro", f"Entrada inválida:\n{err}")
-    
-    #root.geometry("260x360+300+120")

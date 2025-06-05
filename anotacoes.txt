@@ -1,0 +1,36 @@
+ANOTAÇOESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
+falta: impedir a inserção de chaves repetidas (na hash e aí colocar pra checar no kel.py)
+
+também falta implementar a busca por chave na tabela hash
+
+#You can also add pre-filled rows by passing data to add_row(), like:
+#tabela.add_row([6, "New Name", "New City", 25])
+
+#ttk.Label(frm_controls, text="Linha:").grid(row=0, column=0, padx=2, pady=4, sticky="e")
+#spin_row = tk.Spinbox(frm_controls, from_=1, to=tabela.rows, width=5, justify="center")
+#spin_row.grid(row=0, column=1, padx=2, pady=4)
+
+#ttk.Label(frm_controls, text="Coluna:").grid(row=0, column=2, padx=2, pady=4, sticky="e")
+#spin_col = tk.Spinbox(frm_controls, from_=1, to=tabela.cols, width=5, justify="center")
+#spin_col.grid(row=0, column=3, padx=2, pady=4)
+
+#ttk.Button(root, text="Adicionar Linha", command=add_new_row)\
+        #.pack(fill="x", padx=8, pady=4)
+        
+#def mandar_pra_tabela(x, y, valor):
+    #try:
+        #linha   = int(x)
+        #coluna  = int(y)
+        #if valor == "":
+            #raise ValueError("Valor vazio")
+        #tabela.set_value(linha, coluna, valor)
+        #entry_val.delete(0, tk.END)
+    #except (ValueError, IndexError) as err:
+        #messagebox.showerror("Erro", f"Entrada inválida:\n{err}")
+    
+    #root.geometry("260x360+300+120")
+    
+    #def add_new_row():
+        #tabela.add_row()
+        #spin_row.config(to=tabela.rows)   
