@@ -14,7 +14,7 @@ def center_windows(root, dir, buckets):
     # Window dimensions
     root_width = 180
     root_height = 400
-    dir_width = 350
+    dir_width = 283
     dir_height = 400
     buckets_width = 600
     buckets_height = 400
@@ -60,6 +60,23 @@ def main():
     
     # Center and size all windows
     center_windows(root, dir, buckets)
+    
+    # Create a frame in dir window to hold the label (won't be destroyed)
+    dir_header_frame = ttk.Frame(dir)
+    dir_header_frame.grid(row=0, column=0, sticky="nsew")
+    
+    # Global depth label - stays in the header frame
+    profundidade_label = ttk.Label(
+        dir_header_frame, 
+        text="Profundidade global: 0", 
+        anchor="center", 
+        font=("Arial", 12)
+    )
+    profundidade_label.pack(pady=10)
+    
+    # Create a frame for the directory table (below the header)
+    dir_table_frame = ttk.Frame(dir)
+    dir_table_frame.grid(row=1, column=0, sticky="nsew")
 
     # ---------------- tabelaS ----------------
     
@@ -70,22 +87,17 @@ def main():
     
     #DIRETÓRIO
     headersD = ["Hash", "Endereço"]
-    tabela_dir = Table(dir, headers=headersD)
+    tabela_dir = Table(dir_table_frame, headers=headersD)
     tabela_dir.add_row();
 
     # ---------------- controles ----------------
     
+    def update_profundidadeDIR():
+        x = he.dir_size
+        profundidade_label.config(text=f"Profundidade global: {x}")
+    
     frm_controls = ttk.LabelFrame(root, text="Inserir valor")
     frm_controls.pack(fill="x", padx=8, pady=8)
-    
-    # Add a label to display "Profundidade global = X" in the dir window
-    profundidade_label = ttk.Label(dir, text="Profundidade global: 0", anchor="center", font=("Arial", 12))
-    profundidade_label.grid(row=0, column=0, pady=10, sticky="n")  # Use grid instead of pack
-
-    def update_profundidadeDIR():
-        # Update the label text dynamically based on the variable X
-        X = 5
-        profundidade_label.config(text=f"Profundidade global: {X}")
 
     #ttk.Label(frm_controls, text="Linha:").grid(row=0, column=0, padx=2, pady=4, sticky="e")
     #spin_row = tk.Spinbox(frm_controls, from_=1, to=tabela.rows, width=5, justify="center")
@@ -109,26 +121,30 @@ def main():
             #entry_val.delete(0, tk.END)
         #except (ValueError, IndexError) as err:
             #messagebox.showerror("Erro", f"Entrada inválida:\n{err}")
-
+            
     def inserir_valor():
         valor = entry_val.get()
         try:
             valor = int(valor)
-        except:
-            messagebox.showerror("Erro", f"Entrada inválida:")
-        else:
-            he.insert(valor);
-            tab = formatar_tabela();
-            tabela.update_data(tab);
-            print(he)
+            he.insert(valor)
+            tab = formatar_tabela()
+            tabela.update_data(tab)
             update_profundidadeDIR()
+            
+            try:
+                formatted_dir = formatarDIR()
+                tabela_dir.update_data(formatted_dir)
+            except Exception as e:
+                messagebox.showerror("Erro DIR", f"Erro ao atualizar diretório: {str(e)}")
+                
+            entry_val.delete(0, tk.END)
+        except ValueError:
+            messagebox.showerror("Erro", "Entrada inválida: deve ser um número inteiro")
     
     def formatar_tabela():
 
         pos = he.getRefs();
-
         res = []*len(pos);
-
         i = 0;
         
         for pi in pos:
@@ -153,6 +169,12 @@ def main():
             res.append(lis);
 
         return (res);
+    
+    def formatarDIR():
+        bucket_numbers = he.formatedRefs()  
+        hashs = list(range(len(bucket_numbers)))
+        # Convert zip to list of lists
+        return [[h, b] for h, b in zip(hashs, bucket_numbers)]
 
     ttk.Button(frm_controls, text="Inserir", command=inserir_valor)\
             .grid(row=2, column=0, columnspan=4, pady=(6, 4), sticky="we")
@@ -173,6 +195,5 @@ if __name__ == "__main__":
     main()
 
 
-#ANOTACOES
 #You can also add pre-filled rows by passing data to add_row(), like:
 #tabela.add_row([6, "New Name", "New City", 25])
