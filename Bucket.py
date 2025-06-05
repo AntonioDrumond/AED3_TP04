@@ -33,6 +33,9 @@ class Bucket:
             self.regs[self.i] = Register(ID);
             res = self.i;
             self.i += 1;
+            
+            # Sort the bucket contents after insertion!!!!!!!!!!!!!1
+            self.regs = sorted(self.regs[:self.i], key=lambda reg: reg.ID) + self.regs[self.i:]
     
         return (res);
     
