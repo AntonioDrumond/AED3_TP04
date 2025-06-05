@@ -54,7 +54,7 @@ def main():
     
     hash_label = ttk.Label(
         root_header_frame,
-        text="Hash: - % 2^p = -",  # Initial state
+        text="Hash: - % 2^P = -",  # Initial state
         anchor="center",
         font=("Arial", 12)
     )
@@ -117,6 +117,7 @@ def main():
             valor = int(valor)
             
             resultado_hash = he.hash(valor)
+            prof_g = he.dir_size
             
             he.insert(valor)
             tab = formatar_tabela()
@@ -129,7 +130,7 @@ def main():
             except Exception as e:
                 messagebox.showerror("Erro DIR", f"Erro ao atualizar diretório: {str(e)}")
                 
-            hash_label.config(text=f"Hash: {valor} % 2^p = {resultado_hash}")
+            hash_label.config(text=f"Hash: {valor} % 2^{prof_g} = {resultado_hash}")
             
             entry_val.delete(0, tk.END)
             
