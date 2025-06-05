@@ -12,7 +12,7 @@ pkgs.mkShell {
   shellHook = ''
     alias py="python"
     echo ""
-    echo "Packages loaded: Python, anyqt, pyqtdarktheme, pandas and numpy"
+    echo "Packages loaded: Python, tkinter, pandas and numpy"
   '';
 
 }
