@@ -101,4 +101,24 @@ class Table:
         cell.delete(0, tk.END)
         cell.insert(tk.END, value)
         cell.config(state="readonly")    # trava novamente
+
+    def highlight_row(self, row_index, color="green", duration=2500):
+        """Highlight a specific row temporarily"""
+        # Adjust for header row if present
+        adjusted_row = row_index + 1 if self.headers else row_index
+        
+        # Highlight each cell in the row
+        for col in range(self.cols):
+            self.cells[row_index][col].config(background=color)
+        
+        # Remove highlight after duration
+        if duration > 0:
+            self.master.after(duration, lambda: self.remove_highlight(row_index))
+    
+    def remove_highlight(self, row_index):
+        """Remove highlight from a row"""
+        adjusted_row = row_index + 1 if self.headers else row_index
+        
+        for col in range(self.cols):
+            self.cells[row_index][col].config(background='white')
         

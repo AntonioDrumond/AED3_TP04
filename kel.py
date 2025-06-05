@@ -125,7 +125,9 @@ def main():
 
             resultado_hash = he.hash(valor)
             prof_g = he.dir_size
-            tem = he.find(valor)
+            tup = he.find(valor)
+            tem = tup[0] if tup else None
+            
             if tem == None:
                 he.insert(valor)
                 tab = formatar_tabela()
@@ -191,12 +193,52 @@ def main():
     # ---------------- BUSCA ----------------
 
     def buscar_valor():
-        # mostrar a hash do valor
-        # dar um hilight na linha do diretorio
-        # dar um hilight na linha do bucket
-        # mostrar caixa de aviso se achar, mostrando numero do bucket e posicao da chave
-        # mostrar caixa de aviso se não achar, mostrando que não foi encontrado
-        x = 2
+        
+        valor = entry_search.get()
+        
+        try:
+            valor = int(valor)
+            resultado_hash = he.hash(valor)
+            prof_g = he.dir_size
+            
+            # Update hash label
+            hash_label.config(text=f"Hash: {valor} % 2^{prof_g} = {resultado_hash}")
+            
+            # Search in the hash table
+            balde = he.find(valor)
+            tem = balde[0] if balde else None
+            
+            if tem:
+                
+                pos = balde[1]
+                # Highlight directory row
+                dir_row = resultado_hash
+                tabela_dir.highlight_row(dir_row)
+                
+                # Search for the bucket index corresponding to resultado_hash
+                bucket_index = None
+                for pair in formatarDIR():
+                    if pair[0] == resultado_hash:  # Compare the hash value
+                        bucket_index = pair[1]     # Get the bucket number
+                        break
+
+                if bucket_index is None:
+                    messagebox.showerror("Erro", f"Bucket não encontrado para hash {resultado_hash}")
+                else:
+                    # Highlight bucket row
+                    tabela.highlight_row(bucket_index)
+                    
+                    messagebox.showinfo("Busca", f"Valor {valor} encontrado no bucket {bucket_index} na posição {pos}")
+                    
+            else:
+                messagebox.showinfo("Busca", f"Valor {valor} não encontrado")
+            
+            entry_search.delete(0, tk.END)
+            
+        except ValueError:
+            messagebox.showerror("Erro", "Entrada inválida: deve ser um número inteiro")
+            entry_search.focus_set()
+
 
     frm_controls = ttk.LabelFrame(root, text="Buscar valor")
     frm_controls.pack(fill="x", padx=8, pady=8)

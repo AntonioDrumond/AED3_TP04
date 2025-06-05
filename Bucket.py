@@ -50,7 +50,7 @@ class Bucket:
                 i = self.i;
             i += 1;
  
-        return (res);
+        return ((res, i-1));
 
         # Verificar se o bucket esta cheio
     def isFull (self):
