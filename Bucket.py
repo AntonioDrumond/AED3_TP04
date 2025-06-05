@@ -44,13 +44,16 @@ class Bucket:
         res : Register = None;
 
         i = 0;
+        var = 0
+        
         while (i < self.i):
             if (self.regs[i].ID == ID):
                 res = self.regs[i];
+                var = i
                 i = self.i;
             i += 1;
  
-        return ((res, i-1));
+        return ((res, var+1));
 
         # Verificar se o bucket esta cheio
     def isFull (self):
