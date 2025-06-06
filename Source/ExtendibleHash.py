@@ -25,13 +25,23 @@ class ExtendibleHash:
         return ( int (ID % self.pow_size) );
 
         # Duplicar diretorio
-    def dupDir (self):
-        for i in range(self.pow_size):
-            self.dir.append(self.dir[i]); # Copiar referencias
+        # funcao do puddo de aumentar diretorio
+    #def dupDir (self):
+        #for i in range(self.pow_size):
+            #self.dir.append(self.dir[i]); # Copiar referencias
         
 		# Aumentar tamanho do diretorio
-        self.dir_size += 1;
-        self.pow_size = (pow(2, self.dir_size));
+        #self.dir_size += 1;
+        #self.pow_size = (pow(2, self.dir_size));
+
+        # Nova função de aumentar o diretorio
+    def dupDir(self):
+    # Aumentar tamanho do diretorio
+        self.dir_size += 1
+        self.pow_size = (pow(2, self.dir_size))
+        # Copiar referencias
+        old_dir = self.dir.copy()
+        self.dir += old_dir
 
         # Inserir novo registro
     def insert (self, ID):
@@ -48,16 +58,14 @@ class ExtendibleHash:
         bki = bk.insert(ID);	# Inserir registro
     
         return ((hash, bki,));
-        
-        # Duplicar bucket
-    def dupBucket (self, bk, pos):
-
+    # funcao antiga do puddo de duplicar bucket
+    def dupBucketPuddo (self, bk, pos):
         new_depth = bk.local_depth + 1; # Calcular nova profundidade
 
         if (new_depth > self.dir_size):	# Se a pronfundidade local for maior do que a do diretorio
             self.dupDir();				# Duplicar diretorio
 
-		# Criar buckets temporarios
+        # Criar buckets temporarios
         aux1 = Bucket(new_depth);	# Bucket original
         aux2 = Bucket(new_depth);	# Bucket novo
     
@@ -69,7 +77,7 @@ class ExtendibleHash:
                 
                 hash = self.hash(id);		# Calcula a nova hash do registro
 
-				# Reinserir registro
+                # Reinserir registro
                 if (hash == pos):
                     aux1.insert(id);	# Original
                 else:
@@ -77,10 +85,38 @@ class ExtendibleHash:
     
         buf = int (pos + (self.pow_size/2)); 	 # Calcula a posicao do novo bucket
 
-		# Alterar buckets do diretorio
+        # Alterar buckets do diretorio
         self.dir[pos] = aux1;	
         self.dir[buf] = aux2;
 
+    def dupBucket(self, bk, pos):
+        new_depth = bk.local_depth + 1  # Calcular nova profundidade
+
+        if new_depth > self.dir_size:  # Se a profundidade local for maior do que a do diretorio
+            self.dupDir()  # Duplicar diretorio
+
+        # Criar buckets temporarios
+        aux1 = Bucket(new_depth)  # Bucket original
+        aux2 = Bucket(new_depth)  # Bucket novo
+
+        # Reinserir registros nos novos buckets
+        for i in range(bk.i):
+            id = bk.regs[i].ID
+            if id != -1:
+                hash = self.hash(id)
+                if (hash & (1 << (new_depth - 1))) == 0:
+                    aux1.insert(id)
+                else:
+                    aux2.insert(id)
+
+        # Atualizar referencias no diretorio
+        for i in range(self.pow_size):
+            # Se o bucket antigo estava referenciado aqui e o bit relevante for 0, aponta para aux1, senão aux2
+            if self.dir[i] == bk:
+                if (i & (1 << (new_depth - 1))) == 0:
+                    self.dir[i] = aux1
+                else:
+                    self.dir[i] = aux2
         # Encontrar registro
     def find (self, ID):
 
