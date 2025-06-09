@@ -55,6 +55,7 @@ Além disso, a interface gráfica cumpre um papel didático, facilitando a compr
 
 ## Vídeo demonstrativo
 
+https://github.com/AntonioDrumond/AED3_TP04/blob/main/video_teste_tp04_comprimido.mp4
 
 > [Link para video]
 > Para visualizar vídeo disponibilizado no youtube, basta acessar o seguinte link:
