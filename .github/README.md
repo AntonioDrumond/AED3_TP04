@@ -56,7 +56,8 @@ Além disso, a interface gráfica cumpre um papel didático, facilitando a compr
 ## Vídeo demonstrativo
 
 
-
+> [Link para video]
+> Para visualizar vídeo disponibilizado no youtube, basta acessar o seguinte link:
 ## Checklist
 
 - [x] A visualização interativa da Tabela Hash Extensível foi criada? **SIM**.
