@@ -55,10 +55,12 @@ Além disso, a interface gráfica cumpre um papel didático, facilitando a compr
 
 ## Vídeo demonstrativo
 
-https://github.com/AntonioDrumond/AED3_TP04/blob/main/video_teste_tp04_comprimido.mp4
+
+https://github.com/user-attachments/assets/299f196d-5711-48b6-a83a-64e306d4dd3c
+
 
 > [Link para video]
-> Para visualizar vídeo disponibilizado no youtube, basta acessar o seguinte link:
+> Para visualizar vídeo disponibilizado no youtube, basta acessar o seguinte link: https://youtu.be/bh1b4vsjLJE
 ## Checklist
 
 - [x] A visualização interativa da Tabela Hash Extensível foi criada? **SIM**.
